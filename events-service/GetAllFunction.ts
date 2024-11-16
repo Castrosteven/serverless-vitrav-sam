@@ -12,11 +12,19 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
+        const claims = event.requestContext.authorizer.claims;
+        const userId = claims['sub']; // The user ID (Cognito Identity ID)
+        const userEmail = claims['email']; // The user's email address
+        console.log('User ID:', userId);
+        console.log('User Email:', userEmail);
+    
         return {
             statusCode: 200,
             body: JSON.stringify({
-                message: 'hello world',
-            }),
+                message: 'User information retrieved successfully!',
+                userId,
+                userEmail,
+              }),
         };
     } catch (err) {
         console.log(err);

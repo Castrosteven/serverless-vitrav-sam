@@ -62,7 +62,6 @@ Resources:
         AllowAdminCreateUserOnly: false
       AliasAttributes:
         - email
-        - preferred_username
       UserPoolName: !Sub ${AWS::StackName}-UserPool
   GetAllFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -90,10 +89,7 @@ Resources:
           - aws-sdk
         Minify: false
 Outputs:
- 
-  HelloWorldApi:
+
+  EventsApiEndpoint:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
-    Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
-  HelloWorldFunction:
-    Description: Hello World Lambda Function ARN
-    Value: !GetAtt GetAllFunction.Arn
+    Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/
