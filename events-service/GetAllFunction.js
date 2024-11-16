@@ -1,5 +1,6 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.lambdaHandler = void 0;
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -9,24 +10,23 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  *
  */
-
-export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+const lambdaHandler = async (event) => {
     try {
         const claims = event.requestContext.authorizer.claims;
         const userId = claims['sub']; // The user ID (Cognito Identity ID)
         const userEmail = claims['email']; // The user's email address
         console.log('User ID:', userId);
         console.log('User Email:', userEmail);
-    
         return {
             statusCode: 200,
             body: JSON.stringify({
                 message: 'User information retrieved successfully!',
                 userId,
                 userEmail,
-              }),
+            }),
         };
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err);
         return {
             statusCode: 500,
@@ -36,3 +36,4 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
         };
     }
 };
+exports.lambdaHandler = lambdaHandler;
